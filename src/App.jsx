@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./Layout__/pages/Homepage";
-import Signin from "./Auth__/forms/Signin";
 
 const App = () => {
   return (
@@ -9,7 +8,6 @@ const App = () => {
           {/* Public Routes */}
           <Routes>
             <Route path='/' element={<Homepage />} />
-            <Route path="signup" element={<Signin />}/>
           </Routes>
         </div>
 
