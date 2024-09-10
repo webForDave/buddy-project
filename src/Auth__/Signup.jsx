@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import FormInput from "../components/FormInput";
 import { useState } from "react";
 import FormNav from "../components/FormNav";
+import axios from "axios";
 
 const INPUT_VALUES = {
     first_name: '',
@@ -96,22 +97,41 @@ const Signup = () => {
         let isValid = onValidate();
 
         if(isValid) {
-            console.log(formData);
-            setFormData(INPUT_VALUES);
-        }        
+            const handlePost = async (e) => {
+                const response = await axios.post('http://localhost:3000/NewUser', formData);
+
+                try{
+                    setFormData(INPUT_VALUES);
+                    
+                } catch(error) {
+                    console.log(error);
+                    
+                }
+            }
+            handlePost();
+            alert('Form Submitted')
+        }
+
     }
 
   return (
     <div className="w-[100%] h-screen block md:flex justify-between items-center">
+
+        {/* image section */}
+        <div className="hidden md:flex w-[100%] h-full overflow-hidden">
+            <img src="/form-image.jpg" alt="form image" className="w-[100%] h-auto object-cover" />
+        </div>
 
         {/* form section */}
         <div className="w-[100%] h-full overflow-auto pb-[50px]">
 
             <FormNav /> 
 
+            {/* TODO - CHANGE FONT FOR FORM HEADER */}
+
             <div className="w-[100%] flex justify-center items-center px-[50px]">
                 <div className="lg:w-[55%] h-auto">
-                    <h1 className="alegreya-sans-light text-[30px] text-left">holla ✌🏾</h1>
+                    <h1 className="alegreya-sans-light text-[30px] text-left">hi there ✌🏾</h1>
                     <p className="alegreya-sans-bold text-[30px] mb-[25x]">Create an account!</p>
 
                     <form onSubmit={handleSubmit}>
@@ -140,17 +160,12 @@ const Signup = () => {
                             <FormInput type='password' placeholder='confirm password' id='confirm_password' name='confirm_password' value={formData.confirm_password} onChange={handleChange} error={confirmPasswordError} errorText='Confirm Password' checkPasswords={checkPasswords}/>
                         </div>
 
-                        <button type='submit' className="alegreya-sans-bold w-full h-auto p-[10px] my-[20px] rounded-[4px] text-white text-center bg-[#008CCF]">Sign Up</button>
+                        <button type='submit' className='alegreya-sans-bold w-full h-auto p-[10px] my-[20px] rounded-[4px] text-white text-center bg-[#008CCF]'>Sign Up</button>
                         
                         <p className="alegreya-sans-bold text-center ">Already have an account? <Link className="text-[#008CCF]" to='/signin'>Sign In</Link></p>
                     </form>
                 </div>
             </div>
-        </div>
-
-        {/* image section */}
-        <div className="hidden md:flex w-[100%] h-full overflow-hidden">
-            <img src="/form-image.jpg" alt="form image" className="w-[100%] h-auto object-cover" />
         </div>
 
     </div>

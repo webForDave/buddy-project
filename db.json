@@ -1,7 +1,25 @@
-[
+{
+  "NewUser": [
     {
-        "users": [
-            
-        ]
+      "id": "9dea",
+      "first_name": "David",
+      "last_name": "Akinola",
+      "email": "jmsola04@gmail.com",
+      "password": "dakins2004",
+      "confirm_password": "dakins2004"
     }
-]
+  ],
+  
+  "user": [
+    {
+      "id": "3dc2",
+      "email": "dakinola54@gmail.com",
+      "password": "12345"
+    },
+    {
+      "id": "e9ef",
+      "email": "olalekaneniola203@gmail.com",
+      "password": "ejrjeie"
+    }
+  ]
+}
