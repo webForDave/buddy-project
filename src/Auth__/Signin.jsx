@@ -12,24 +12,21 @@ const INPUT_VALUES = {
 const Signin = () => {
 
     const [formData, setFormData] = useState(INPUT_VALUES);
-    // const [formError, setFormError] = useState(
-    //     {
-    //         email: false,
-    //         password: false
-    //     }
-    // )
-
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [emailTypeError, setEmailTypeError] = useState(false);
+    const [formErrors, setFormErrors] = useState(
+        {
+            email: false,
+            password: false,
+            emailCheck: false
+        }
+    )
 
     const handleChange = e => {
-        let name = e.target.name;
+        let {name, value} = e.target.name;
 
         setFormData(
             {
                 ...formData,
-                [name]: e.target.value
+                [name]: value
             }
         )
     }
@@ -38,25 +35,25 @@ const Signin = () => {
         let isValid = true;
         let emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
 
+        const newErrors = {
+            email: false,
+            password: false,
+            emailCheck: false
+        }
+
         if(formData.email === '') {
-            setEmailError(true)
+            newErrors.email = true;
             isValid = false
         } else if(!emailRegex.test(formData.email)) {
-            setEmailError(false);
-            setEmailTypeError(true)
+            newErrors.emailCheck = true;
             isValid = false;
-        } else {
-            setEmailError(false);
-            setEmailTypeError(false)
-        }
+        } 
 
         if(formData.password === '') {
-            setPasswordError(true);
+            newErrors.password = true;
             isValid = false;
-        } else {
-            setPasswordError(false);
         }
-
+        setFormErrors(newErrors);
         return isValid;
     }
 
@@ -69,13 +66,14 @@ const Signin = () => {
                 const response = await axios.post('http://localhost:3000/user', formData);
 
                 try{
-                    setFormData(INPUT_VALUES);
-
+                    console.log('Response :', response);
                 } catch(error) {
                     console.log(error);
                     
                 }
             }
+
+            setFormData(INPUT_VALUES);
             handleUser();
         }
     }
@@ -99,12 +97,14 @@ const Signin = () => {
 
                     <form onSubmit={handleSubmit}>
                         <div>
+                            {formErrors.emailCheck && <p className="alegreya-sans-bold text-red-600 text-right">Invalid Email</p>}
                             <label htmlFor="email">Email Address</label>
-                            <FormInput type='text' placeholder='johndoe@gmail.com' id='email' name='email' value={formData.email} onChange={handleChange} error={emailError} emailTypeError={emailTypeError} errorText='Email Address'/>
+                            <FormInput type='text' placeholder='johndoe@gmail.com' id='email' name='email' value={formData.email} onChange={handleChange} error={formErrors.email} />
                         </div>
+
                         <div>
                             <label htmlFor="password">Password</label>
-                            <FormInput type='password' placeholder='Password' id='password' name='password' value={formData.password} onChange={handleChange} error={passwordError} errorText='Password'/>
+                            <FormInput type='password' placeholder='Password' id='password' name='password' value={formData.password} onChange={handleChange} error={formErrors.password} />
                         </div>
 
                         <button type='submit' className="alegreya-sans-bold w-full h-auto p-[10px] my-[20px] rounded-[4px] text-white text-center bg-[#008CCF]">Sign In</button>

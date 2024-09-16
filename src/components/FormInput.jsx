@@ -1,8 +1,6 @@
-const FormInput = ({type, placeholder, name, id, value, onChange, error, errorText, emailTypeError, checkPasswords}) => {
+const FormInput = ({type, placeholder, name, id, value, onChange, error, checkPasswords}) => {
   return (
     <div>
-      {emailTypeError && <p className="alegreya-sans-bold text-red-600 text-right">Invalid Email</p>}
-      {checkPasswords && <p className="alegreya-sans-bold text-red-600 text-right">Passwords do not match</p>}
         <input
             type={type}
             placeholder={placeholder}
